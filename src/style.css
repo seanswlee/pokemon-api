@@ -1,0 +1,17 @@
+body {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/001/214/817/original/clouds-on-blue-sky-vector.jpg');
+}
+
+#pokedex-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
