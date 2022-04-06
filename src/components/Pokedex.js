@@ -32,37 +32,46 @@ const Pokedex = () => {
           .then((data) => {
             resolve(data);
           })
-          .catch((_err) => {
+          .catch((err) => {
+            console.error(err);
             resolve(null);
           });
       });
       allPromises.push(promise);
     });
 
-    const results = await Promise.all(allPromises);
-
-    // ! Handles Pokemon data that could not be fetched
-    // results = results.filter(result => result !== null);
-
-    return results;
+    try {
+      const results = await Promise.all(allPromises);
+      // ! Handles Pokemon data that could not be fetched
+      // results = results.filter(result => result !== null);
+      return results;
+    } catch (err) {
+      throw err;
+    }
   };
 
   useEffect(() => {
     const getPokedexData = async () => {
-      const pokedex = await axios.get(getRandomUrl());
-      const records = pokedex.data.results;
-      const data = await getPokemonData(records);
-      setPokedexData(data);
+      try {
+        const pokedex = await axios.get(getRandomUrl());
+        const records = pokedex.data.results;
+        const data = await getPokemonData(records);
+        setPokedexData(data);
+      } catch (err) {
+        throw err;
+      }
     };
     getPokedexData();
 
-    // * Anonymous func
     // (async () => {
-    //   const url = 'https://pokeapi.co/api/v2/pokemon?limit=100&offset=151';
-    //   const pokedex = await axios.get(url);
-    //   const records = pokedex.data.results;
-    //   const data = await getPokemonData(records);
-    //   setPokedexData(data);
+    //   try {
+    //     const pokedex = await axios.get(getRandomUrl());
+    //     const records = pokedex.data.results;
+    //     const data = await getPokemonData(records);
+    //     setPokedexData(data);
+    //   } catch (err) {
+    //     throw err;
+    //   }
     // })();
   }, []);
 
